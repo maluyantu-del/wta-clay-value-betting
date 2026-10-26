@@ -1,0 +1,165 @@
+td_pattern,sackmann_name,year_from,year_to,tier_expected,notes
+# ==============================================================================
+# WTA clay tournament alias — Tennis-Data → Sackmann mapping
+# ==============================================================================
+# Built from the 68 distinct TD tournament strings observed in 2007-2025
+# clay data (post Rouen blacklist). Sackmann tourney_name strings verified
+# against Sackmann 2007-2025 clay main-draw data on 2026-04-21.
+#
+# Columns
+#   td_pattern     EXACT Tennis-Data 'Tournament' string (case-sensitive match)
+#   sackmann_name  case-insensitive substring used to filter Sackmann
+#                  tourney_name candidates (NOT a regex)
+#   year_from / year_to  inclusive bounds for THIS row's mapping
+#                  blank = no bound on that side
+#   tier_expected  one of {GS, WTA1000, WTA500, WTA250, WTA125}
+#   notes          free-text human comment
+#
+# Multiple rows per td_pattern allowed when tier or sackmann_name varies
+# by year (e.g. Family Circle Cup was Tier I 2007-2008 then Premier 2009+).
+# ==============================================================================
+
+# --- GRAND SLAM ---
+French Open,Roland Garros,,,GS,Continuous 2007-2025
+
+# --- WTA 1000 (Premier 5 / Premier Mandatory + modern) ---
+Internazionali BNL d'Italia,Rome,,,WTA1000,Pre-2009 T1 + post-2009 Premier 5 (whitelisted)
+Mutua Madrileña Madrid Open,Madrid,2009,2011,WTA1000,Pre-rebrand sponsor; PM tier
+Mutua Madrid Open,Madrid,2012,,WTA1000,Madrid 2016/2021/2022 P fixed via TOURNEY_NAME_OVERRIDES
+
+# --- Pre-2009 Tier I (mapped to WTA1000 by Sackmann classifier) ---
+Family Circle Cup,Charleston,2007,2008,WTA1000,Tier I era
+Qatar Telecom German Open,Berlin,2007,2008,WTA1000,Tier I; replaced by Madrid 2009
+
+# --- WTA 500 (Premier non-5 + modern) ---
+Family Circle Cup,Charleston,2009,2019,WTA500,Premier era; sponsor changed multiple times
+Volvo Car Open,Charleston 1,2021,2021,WTA500,Sackmann tourney_name='Charleston 1' (1st 2021 event)
+Charleston Open,Charleston,2022,,WTA500,Current Charleston naming
+Porsche Tennis Grand Prix,Stuttgart,2009,,WTA500,Indoor red clay; pre-2009 Hard (not in clay corpus)
+Brussels Open,Brussels,2011,2013,WTA500,Premier (NOT Premier 5); discontinued 2014
+Ostrava Open,Ostrava,2020,2021,WTA500,COVID-era WTA 500 outdoor clay; 2022+ moved to indoor Hard
+Bausch & Lomb Championships,Amelia Island,2007,2008,WTA500,Tier II 2007-2008; venue discontinued post-2008
+J&S Cup,Warsaw,2007,2007,WTA500,Tier II 2007 only in TD
+Warsaw Open,Warsaw,2009,2010,WTA500,Premier 2009-2010 (corrected from WTA250)
+
+# --- WTA 250 ---
+
+# Strasbourg — continuous WTA 250 since 2007.
+# 2021 was Sackmann-mis-tagged as 'W' (WTA125); fixed via TOURNEY_NAME_OVERRIDES
+# in sackmann.py. Real event was WTA 250 (Krejcikova champion, draw included
+# Andreescu #7, Pegula #29, Alexandrova #33).
+Internationaux de Strasbourg,Strasbourg,,,WTA250,Continuous WTA 250 since 2007
+
+# Acapulco — clay only thru 2013 (locked decision)
+Abierto Mexicano,Acapulco,2007,2013,WTA250,Clay 2005-2013; switched to Hard 2014; WTA withdrew 2015
+
+# Istanbul — clay 2007-2014 + 2016 only.
+# 2017-2022 TD Clay rows are mis-tags blacklisted at oddsfeed level (event was
+# Hard 2015+); they never reach this matcher, so no alias entries needed.
+Istanbul Cup,Istanbul,2007,2014,WTA250,Pre-Hard era
+TEB BNP Paribas Istanbul Cup,Istanbul,2016,2016,WTA250,2016 clay edition (legit; Hibino/Mladenovic/Buyukakcay draw)
+
+# Bad Gastein
+Gastein Ladies,Bad Gastein,2007,2015,WTA250,Discontinued post-2015
+
+# Bogotá — 5 sponsor variants
+Copa Colsanitas Santander,Bogota,2007,2008,WTA250,Tier III pre-2009
+Copa Sony Ericsson Colsanitas,Bogota,2009,2009,WTA250,
+Copa BBVA Colsanitas,Bogota,2010,2012,WTA250,
+Copa Claro Colsanitas,Bogota,2013,2019,WTA250,
+Copa Colsanitas,Bogota,2021,,WTA250,Modern naming
+
+# Nürnberg — Sackmann uses two spellings across years
+Nürnberger Versicherungscup,Nuremberg,2013,2015,WTA250,Sackmann uses 'Nuremberg' spelling 2013-2015
+Nürnberger Versicherungscup,Nurnberg,2016,2019,WTA250,Sackmann uses 'Nurnberg' spelling 2016-2019
+
+# Estoril / Oeiras
+Estoril Open,Estoril,2007,2012,WTA250,
+Portugal Open,Oeiras,2013,2014,WTA250,Estoril event relocated to Oeiras
+
+# Bucharest
+Bucharest Open,Bucharest,2014,2019,WTA250,
+
+# Iași (Romania)
+Iasi Open,Iasi,2024,,WTA250,Sackmann tourney_name='Iasi' (no diacritic); 2025 Sackmann data may be sparse
+
+# Båstad — 3 sponsor variants
+Collector Swedish Open,Bastad,2009,2015,WTA250,
+Sony Swedish Open,Bastad,2012,2012,WTA250,Same physical event 2012 alt naming
+Ericsson Open,Bastad,2016,2017,WTA250,Båstad 2016-2017 sponsor era (Siegemund 2016 / Siniakova 2017 finals)
+
+# Palermo — 3 string variants spanning 2007-2024 with mid-decade gap
+Internazionali Femminili di Tennis di Palermo,Palermo,2007,2011,WTA250,Old naming
+Italiacom Open,Palermo,2012,2013,WTA250,2012-2013 sponsor era (Errani/Vinci finals); fills the gap
+Internazionali Femminili di Palermo,Palermo,2019,,WTA250,Modern naming
+
+# Prague — 3 string variants
+ECM Prague Open,Prague,2007,2010,WTA250,Pre-J&T sponsor era
+J&T Banka Prague Open,Prague,2015,2020,WTA250,
+Prague Open,Prague,2024,,WTA250,J&T Banka rebrand 2024+
+
+# Budapest — 5 string variants
+Gaz de France Budapest Grand Prix,Budapest,2007,2010,WTA250,
+POLI-FARBE Budapest Grand Prix,Budapest,2011,2011,WTA250,
+Budapest Grand Prix,Budapest,2012,2012,WTA250,
+Hungarian Grand Prix,Budapest,2013,2013,WTA250,
+Budapest Open,Budapest,2021,,WTA250,Recent Budapest revival
+
+# Barcelona
+Barcelona KIA,Barcelona,2007,2008,WTA250,Tier IV pre-2009
+Barcelona Ladies Open,Barcelona,2009,2012,WTA250,Discontinued post-2012
+
+# Switzerland — TWO DISTINCT EVENTS (do not collapse — locked decision)
+Ladies Open Lausanne,Lausanne,2019,2023,WTA250,Lausanne (Swiss); DIFFERENT from Lugano
+Samsung Open,Lugano,2018,2019,WTA250,Lugano (Swiss); DIFFERENT from Lausanne; Mertens 2018 / Hercog 2019 finals
+
+# Gstaad
+Ladies Championship Gstaad,Gstaad,2016,2018,WTA250,
+
+# Latin America
+Rio Open,Rio de Janeiro,2014,2016,WTA250,Sackmann name 'Rio de Janeiro'; WTA dropped post-2016
+Cachantun Cup,Vina del Mar,2008,2008,WTA250,Sackmann name 'Vina Del Mar' (capital D)
+
+# Spain (Marbella)
+Andalucia Tennis Experience,Marbella,2009,2011,WTA250,
+
+# US clay (post Tier I era)
+MPS Group Championships,Ponte Vedra Beach,2009,2010,WTA250,Sackmann name 'Ponte Vedra Beach'
+MUSC Health Women's Open,Charleston 2,2021,2021,WTA125,2nd Charleston event 2021 COVID (WTA 125); Sackmann tourney_name='Charleston 2'
+
+# Poland — Warsaw vs Gdynia (DISTINCT canonicals — locked decision).
+# Warsaw Open 2009-2010 row lives in the WTA500 block above.
+Poland Open,Gdynia,2021,2021,WTA250,2021 held in Gdynia (NOT Warsaw)
+Poland Open,Warsaw,2022,2023,WTA250,2022-2023 moved back to Warsaw
+
+# Katowice
+BNP Paribas Katowice Open,Katowice,2013,2014,WTA250,
+Katowice Open,Katowice,2015,2016,WTA250,
+
+# Hamburg — 'European Open' rebrand era 2021-2023 (3 editions); 2024 cancelled;
+# 2025 revived as 'Hamburg Open' (verified real WTA event, not ATP-leak —
+# winners/format match WTA pattern). Sackmann 2025 data not yet imported as of
+# 2026-04-21, so 2025 rows expected to be sackmann_missing in audit.
+European Open,Hamburg,2021,2023,WTA250,Hamburg European Open (Ruse 2021 / Pera 2022 / Rus 2023 finals)
+Hamburg Open,Hamburg,2025,2025,WTA250,Hamburg revived 2025; 2024 cancelled; expect sackmann_missing until Sackmann updates 2025
+
+# Morocco — venue verified against Sackmann 2007-2025 main-draw clay strings:
+#   Sackmann has 'Fes' 2007-2012 (186 rows) and 'Rabat' 2016-2024 (217 rows).
+#   No Casablanca string. 2013-2015 + 2020-2021 have NO main-draw clay rows
+#   in Sackmann — TD coverage in those years will be sackmann_missing in
+#   the audit (event likely played on Hard, or simply absent).
+FesGrand Prix de SAR La Princesse Lalla Meryem,Fes,2007,2007,WTA250,Fès 2007 (Sackmann name='Fes')
+Grand Prix de SAR La Princesse Lalla Meryem,Fes,2008,2012,WTA250,Sackmann 'Fes' 2008-2012
+Grand Prix de SAR La Princesse Lalla Meryem,Marrakech,2013,2014,WTA250,Sackmann main-draw clay missing 2013-2014; expect sackmann_missing
+Grand Prix SAR Lalla Meryem,Rabat,2016,2022,WTA250,Sackmann 'Rabat' 2016-2022; 2015 row sackmann_missing
+Grand Prix SAR Lalla Meryem,Rabat,2015,2015,WTA250,2015 has TD rows but Sackmann has nothing; expect sackmann_missing
+Morocco Open,Rabat,2023,,WTA250,Sackmann 'Rabat' 2023+
+
+# COVID one-offs / new ITF-converted events
+Parma Ladies Open,Parma,2022,2022,WTA250,
+Baltic Open,Jurmala,2019,2019,WTA250,Latvia 2019 only
+Moscow River Cup,Moscow,2018,2018,WTA250,WTA International 2018 (corrected from WTA125)
+
+# --- WTA 125 (Challenger / one-offs) ---
+Serbia Ladies Open,Belgrade,2021,2021,WTA125,Belgrade 2021 was WTA 125
+Emilia-Romagna Open,Parma,2021,2021,WTA125,COVID 2021 Parma WTA 125

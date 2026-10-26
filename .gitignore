@@ -1,0 +1,9 @@
+data/*
+!data/README.md
+*.egg-info/
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+.DS_Store
+artifacts/equity_curve_B_4_core.png
